@@ -46,44 +46,6 @@ Admins can monitor all activity, handle user reports, and suspend accounts that 
 
 ---
 
-## Screenshots
-
-### Login Page
-![Login](screenshots/Login_Page.png)
-
-### Main Page — Book Discovery
-![Main Page](screenshots/Main_Page.png)
-
-### Book Detail
-![Book Detail](screenshots/Book_Detail.png)
-
-### Add Book
-![Add Book](screenshots/Add_Book.png)
-
-### My Book Listings
-![My Book Listings](screenshots/My_Book_Listing.png)
-
-### Books Rented by Me
-![Books Rented by Me](screenshots/Books_Rented_by_Me.png)
-
-### Notifications & Requests
-![Notifications](screenshots/Notifications.png)
-
-### Profile Settings
-![Profile 1](screenshots/Profile1.png)
-![Profile 2](screenshots/Profile2.png)
-
-### Admin Dashboard
-![Admin Dashboard](screenshots/Admin_Dashboard.png)
-
-### User Suspension Management
-![User Suspension](screenshots/User_Suspension.png)
-
-### Reported Items
-![Reported Items](screenshots/Reported_Items.png)
-
----
-
 ## Tech Stack
 
 - **PHP 8.2** — PDO with prepared statements for all database operations
@@ -164,7 +126,7 @@ extension_dir = "C:\path\to\your\php\ext"
 
 #### Apply required schema updates
 
-The following columns are required but may be missing from the base schema. Run these SQL statements in MySQL Workbench (or via the PHP scripts below):
+Run these SQL statements in MySQL Workbench:
 
 ```sql
 ALTER TABLE users ADD COLUMN is_suspended TINYINT(1) NOT NULL DEFAULT 0;
@@ -270,3 +232,280 @@ book-exchange/
 ## License
 
 This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
+
+---
+---
+
+# 📚 Book Exchange Platformu
+
+PHP ve MySQL ile geliştirilmiş, üniversite öğrencilerinin birbirleriyle kitap listelemesine, kiralamasına ve takas etmesine olanak tanıyan bir web uygulamasıdır. Platform; onay iş akışı, gerçek zamanlı bildirimler ve sistem yönetimi için bir admin paneli içermektedir.
+
+---
+
+## Bu Uygulama Ne İşe Yarar?
+
+Book Exchange, üniversite topluluklarına yönelik tasarlanmış bir eşten eşe kitap paylaşım platformudur. Her dönem pahalı yeni ders kitabı satın almak yerine öğrenciler şunları yapabilir:
+
+- Diğer öğrencilerden belirli bir tarih aralığı ve günlük ücret karşılığında kitap **kiralayabilir**
+- Kendi kitaplarından birini teklif ederek başkasının kitabıyla **takas** yapabilir
+- Arama, kategori ve durum filtrelerini kullanarak mevcut kitapları **keşfedebilir**
+- Kendi ilanlarını **yönetebilir** ve gelen kira/takas taleplerini takip edebilir
+
+Adminler tüm aktiviteyi izleyebilir, kullanıcı şikayetlerini değerlendirebilir ve kural ihlali yapan hesapları askıya alabilir.
+
+---
+
+## Özellikler
+
+### Öğrenci Özellikleri
+
+| Özellik | Açıklama |
+|---|---|
+| Kayıt & Giriş | Şifreli ve güvenli hesap oluşturma ve giriş |
+| Kitap Keşfi | Arama, kategori, durum ve yıl filtresiyle tüm kitaplara göz at |
+| Kitap Ekle / Düzenle / Sil | Başlık, yazar, yıl, durum, kategori, fiyat ve kapak görseli ile ilan ver |
+| Kitap Kirala | Başlangıç ve bitiş tarihi seçerek kiralama talebi oluştur |
+| Kitap Takası | Kendi kitaplarından birini teklif ederek takas öner |
+| Kitaplarım | İlanlarını gör ve her kitap için kaç bekleyen kira/takas talebi olduğunu takip et |
+| Kiraladıklarım | Başkalarından kiraladığın kitapları görüntüle |
+| Bildirimler | Gelen kira/takas taleplerini al ve yanıtla; sistem mesajlarını görüntüle |
+| Profil Ayarları | Kişisel bilgilerini güncelle ve şifreni değiştir |
+| Kitap Şikayet Et | Uygunsuz veya hatalı listelenen kitapları admin incelemesi için işaretle |
+
+### Admin Özellikleri
+
+| Özellik | Açıklama |
+|---|---|
+| Admin Paneli | Toplam öğrenci, kitap, şikayet ve askıya alınan hesap özeti |
+| Kullanıcı Yönetimi | Tüm kayıtlı kullanıcıları ve aktivitelerini görüntüle |
+| Kitap Yönetimi | Platformdaki tüm kitap ilanlarını gözden geçir ve yönet |
+| Şikayet Paneli | Şikayet edilen kitapları incele ve aksiyon al (yoksay veya kaldır) |
+| Kullanıcı Askıya Alma | Gerekçe ve bitiş tarihi ile kullanıcıyı askıya al; askıya alma geçmişini görüntüle |
+
+---
+
+## Teknoloji Yığını
+
+- **PHP 8.2** — Tüm veritabanı işlemleri için PDO ve hazırlanmış sorgular
+- **MySQL 8.0** — İlişkisel veritabanı
+- **Saf CSS** — Harici UI kütüphanesi kullanılmamıştır, tamamen özel tasarım
+- **PHP Built-in Server** — Yerel geliştirme için (Apache gerekmez)
+
+---
+
+## Gereksinimler
+
+- **PHP 8.2+** (`pdo_mysql` eklentisi etkin olmalı)
+- **MySQL 8.0+**
+
+---
+
+## Kurulum
+
+### 1. Projeyi İndir
+
+Repoyu bilgisayarına indirin veya klonlayın:
+
+```
+book-exchange/
+├── database.sql          # Yalnızca şema, veri yok
+├── database_sample.sql   # Şema + örnek veriler (test için önerilir)
+└── src/                  # Tüm PHP uygulama dosyaları
+```
+
+### 2. PHP Kur
+
+PHP 8.2'yi winget ile kur (Windows):
+
+```powershell
+winget install PHP.PHP.8.2
+```
+
+Kurulumdan sonra terminali yeniden başlat ve doğrula:
+
+```powershell
+php -v
+```
+
+#### pdo_mysql Eklentisini Etkinleştir
+
+PHP'nin kurulu olduğu klasörü bul:
+
+```powershell
+where.exe php
+```
+
+O klasörde `php.ini-development` dosyasını `php.ini` olarak kopyala, ardından `php.ini` dosyasını aç ve şu satırın başındaki `;` işaretini kaldır:
+
+```ini
+;extension=pdo_mysql
+```
+
+Şu hale getir:
+
+```ini
+extension=pdo_mysql
+```
+
+Ayrıca `extension_dir` satırını da yorum olmaktan çıkar ve PHP kurulum klasörünün içindeki `ext` klasörüne yönlendir:
+
+```ini
+extension_dir = "C:\php-kurulum-yolu\ext"
+```
+
+### 3. Veritabanını Kur
+
+1. **MySQL Workbench**'i aç ve yerel MySQL bağlantına bağlan
+2. `book_exchange` adında yeni bir şema oluştur
+3. **Server → Data Import** menüsüne git
+4. **Import from Self-Contained File** seçeneğini seç ve `database_sample.sql` dosyasını göster
+5. **Default Target Schema** olarak `book_exchange` seç
+6. **Start Import** butonuna bas
+
+#### Gerekli Şema Güncellemelerini Uygula
+
+MySQL Workbench'te şu SQL komutlarını çalıştır:
+
+```sql
+ALTER TABLE users ADD COLUMN is_suspended TINYINT(1) NOT NULL DEFAULT 0;
+ALTER TABLE users ADD COLUMN suspension_end_date DATE NULL;
+ALTER TABLE users ADD COLUMN suspension_reason TEXT NULL;
+ALTER TABLE notifications ADD COLUMN type VARCHAR(50) NOT NULL DEFAULT 'info';
+```
+
+### 4. Ortam Değişkenlerini Yapılandır
+
+`src/` klasörünün içine `.env` adında bir dosya oluştur:
+
+```env
+DB_HOST=localhost
+DB_NAME=book_exchange
+DB_USER=root
+DB_PASS=mysql_sifren
+BASE_URL=
+```
+
+`mysql_sifren` kısmını kendi MySQL şifrenle değiştir.
+
+### 5. Uygulamayı Başlat
+
+`src/` klasöründe bir terminal aç ve şunu çalıştır:
+
+```powershell
+php -S localhost:8000
+```
+
+Ardından tarayıcını aç ve şu adrese git:
+
+```
+http://localhost:8000
+```
+
+---
+
+## Varsayılan Test Hesapları
+
+`database_sample.sql` içe aktarıldıktan sonra şu hesaplar kullanılabilir:
+
+| Rol | E-posta | Şifre |
+|---|---|---|
+| Admin | user1@univ.edu | 123456 |
+| Öğrenci | user2@univ.edu | 123456 |
+
+> Bir kullanıcıyı admin yapmak için MySQL Workbench üzerinden `users` tablosundaki `role` sütununu `admin` olarak güncelle.
+
+---
+
+## Yapılandırma Notları
+
+- **Admin Erişimi** — Herhangi bir kullanıcı kaydettikten sonra veritabanında `role` değerini `admin` yap
+- **Kitap Görselleri** — Yüklenen kapak görselleri `src/uploads/` klasöründe saklanır. Bu klasörün mevcut ve yazılabilir olduğundan emin ol
+- **E-posta Domain Kısıtlaması** — Kaydı belirli bir üniversite domainiye kısıtlamak için `src/auth.php` içindeki `is_valid_university_email()` fonksiyonunu düzenle
+
+---
+
+## Proje Yapısı
+
+```
+book-exchange/
+├── database.sql                    # Veritabanı şeması (veri yok)
+├── database_sample.sql             # Şema + örnek test verileri
+├── README.md
+└── src/
+    ├── .env                        # Ortam değişkenleri (DB bilgileri)
+    ├── config.php                  # Veritabanı bağlantısı, .env'yi yükler
+    ├── auth.php                    # Kimlik doğrulama yardımcıları
+    ├── header.php                  # Ortak navigasyon başlığı
+    ├── footer.php                  # Ortak alt bilgi
+    ├── style.css                   # Tüm uygulama stilleri
+    ├── index.php                   # Kitap keşfi / ana sayfa
+    ├── login.php                   # Giriş sayfası
+    ├── register.php                # Kayıt sayfası
+    ├── logout.php                  # Oturum kapatma
+    ├── add_book.php                # Yeni kitap ilanı ekle
+    ├── edit_book.php               # Mevcut kitabı düzenle
+    ├── delete_book.php             # Kitap ilanını sil
+    ├── book_detail.php             # Kitap detay sayfası
+    ├── my_books.php                # Kullanıcının ilanları + kiraladıkları
+    ├── rent_confirm.php            # Kiralama tarih seçimi
+    ├── rental_action.php           # Kiralama kabul / red
+    ├── swap_request.php            # Takas başlat
+    ├── swap_action.php             # Takas kabul / red
+    ├── notifications.php           # Bildirimler ve bekleyen talepler
+    ├── profile.php                 # Profil ayarları
+    ├── admin_dashboard.php         # Admin genel görünümü
+    ├── admin_books.php             # Admin kitap yönetimi
+    ├── admin_users.php             # Admin kullanıcı yönetimi
+    ├── admin_actions.php           # Admin aksiyon işleyicileri
+    ├── admin_reports.php           # Şikayet edilen kitaplar paneli
+    ├── admin_suspend.php           # Kullanıcı askıya alma paneli
+    ├── admin_suspend_history.php   # Askıya alma geçmişi
+    ├── suspension_helpers.php      # Askıya alma yardımcı fonksiyonları
+    ├── suspension_notice.php       # Askıya alma bildirim sayfası
+    └── uploads/                    # Kullanıcıların yüklediği kitap kapak görselleri
+```
+
+---
+
+## Lisans
+
+Bu proje MIT Lisansı ile lisanslanmıştır — detaylar için [LICENSE](LICENSE) dosyasına bakın.
+
+---
+---
+
+## Screenshots / Ekran Görüntüleri
+
+### Login Page / Giriş Sayfası
+![Login](screenshots/Login_Page.png)
+
+### Main Page / Ana Sayfa
+![Main Page](screenshots/Main_Page.png)
+
+### Book Detail / Kitap Detayı
+![Book Detail](screenshots/Book_Detail.png)
+
+### Add Book / Kitap Ekle
+![Add Book](screenshots/Add_Book.png)
+
+### My Book Listings / Kitap İlanlarım
+![My Book Listings](screenshots/My_Book_Listing.png)
+
+### Books Rented by Me / Kiraladığım Kitaplar
+![Books Rented by Me](screenshots/Books_Rented_by_Me.png)
+
+### Notifications / Bildirimler
+![Notifications](screenshots/Notifications.png)
+
+### Profile Settings / Profil Ayarları
+![Profile 1](screenshots/Profile1.png)
+![Profile 2](screenshots/Profile2.png)
+
+### Admin Dashboard / Admin Paneli
+![Admin Dashboard](screenshots/Admin_Dashboard.png)
+
+### User Suspension / Kullanıcı Askıya Alma
+![User Suspension](screenshots/User_Suspension.png)
+
+### Reported Items / Şikayet Edilen Kitaplar
+![Reported Items](screenshots/Reported_Items.png)
