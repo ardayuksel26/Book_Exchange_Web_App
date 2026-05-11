@@ -1,0 +1,272 @@
+# 📚 Book Exchange Platform
+
+A web application built with PHP and MySQL that allows university students to list, rent, and swap books with each other. The platform features a full approval workflow, real-time notifications, and an admin panel for system management.
+
+---
+
+## What is this?
+
+Book Exchange is a peer-to-peer book sharing platform designed for university communities. Instead of buying expensive new textbooks every semester, students can:
+
+- **Rent** books from other students for a specific date range and daily price
+- **Swap** books — offer one of your books in exchange for someone else's
+- **Discover** available books through a searchable, filterable marketplace
+- **Manage** their listings and track incoming rental/swap requests
+
+Admins can monitor all activity, handle user reports, and suspend accounts that violate platform rules.
+
+---
+
+## Features
+
+### Student Features
+
+| Feature | Description |
+|---|---|
+| Registration & Login | Secure account creation and login with hashed passwords |
+| Book Discovery | Browse all available books with search, category, status, and year filters |
+| Add / Edit / Delete Book | List your books with title, author, year, condition, category, price, and cover image |
+| Rent a Book | Request to rent a book by selecting a start and end date |
+| Swap a Book | Propose a swap by offering one of your own books in return |
+| My Books | View your listings and see how many pending rent/swap requests each book has |
+| Books Rented by Me | Track books you are currently renting from others |
+| Notifications | Receive and respond to incoming rent/swap requests; view system messages |
+| Profile Settings | Update your personal information and change your password |
+| Report a Book | Flag inappropriate or incorrectly listed books for admin review |
+
+### Admin Features
+
+| Feature | Description |
+|---|---|
+| Admin Dashboard | Overview of total students, books, reports, and suspended accounts |
+| User Management | View all registered users and their activity |
+| Book Management | Browse and manage all book listings on the platform |
+| Reports Panel | Review reported books and take action (ignore or remove) |
+| User Suspension | Suspend users with a reason and end date; view suspension history |
+
+---
+
+## Screenshots
+
+### Login Page
+![Login](screenshots/Login_Page.png)
+
+### Main Page — Book Discovery
+![Main Page](screenshots/Main_Page.png)
+
+### Book Detail
+![Book Detail](screenshots/Book_Detail.png)
+
+### Add Book
+![Add Book](screenshots/Add_Book.png)
+
+### My Book Listings
+![My Book Listings](screenshots/My_Book_Listing.png)
+
+### Books Rented by Me
+![Books Rented by Me](screenshots/Books_Rented_by_Me.png)
+
+### Notifications & Requests
+![Notifications](screenshots/Notifications.png)
+
+### Profile Settings
+![Profile 1](screenshots/Profile1.png)
+![Profile 2](screenshots/Profile2.png)
+
+### Admin Dashboard
+![Admin Dashboard](screenshots/Admin_Dashboard.png)
+
+### User Suspension Management
+![User Suspension](screenshots/User_Suspension.png)
+
+### Reported Items
+![Reported Items](screenshots/Reported_Items.png)
+
+---
+
+## Tech Stack
+
+- **PHP 8.2** — PDO with prepared statements for all database operations
+- **MySQL 8.0** — Relational database
+- **Pure CSS** — No external UI frameworks, fully custom styling
+- **PHP Built-in Server** — For local development (no Apache required)
+
+---
+
+## Requirements
+
+- **PHP 8.2+** (with `pdo_mysql` extension enabled)
+- **MySQL 8.0+**
+
+---
+
+## Installation
+
+### 1. Download the project
+
+Download or clone the repository to your machine:
+
+```
+book-exchange/
+├── database.sql          # Clean schema, no data
+├── database_sample.sql   # Schema + sample data (recommended for testing)
+└── src/                  # All PHP application files
+```
+
+### 2. Install PHP
+
+Install PHP 8.2 using winget (Windows):
+
+```powershell
+winget install PHP.PHP.8.2
+```
+
+Restart your terminal after installation, then verify:
+
+```powershell
+php -v
+```
+
+#### Enable pdo_mysql extension
+
+Find where PHP was installed:
+
+```powershell
+where.exe php
+```
+
+In that folder, copy `php.ini-development` to `php.ini`, then open `php.ini` and find the following line and remove the `;` at the beginning:
+
+```ini
+;extension=pdo_mysql
+```
+
+Change it to:
+
+```ini
+extension=pdo_mysql
+```
+
+Also find and uncomment the `extension_dir` line, pointing it to the `ext` folder inside your PHP installation directory:
+
+```ini
+extension_dir = "C:\path\to\your\php\ext"
+```
+
+### 3. Set up the database
+
+1. Open **MySQL Workbench** and connect to your local MySQL instance
+2. Create a new schema named `book_exchange`
+3. Go to **Server → Data Import**
+4. Select **Import from Self-Contained File** and choose `database_sample.sql`
+5. Set **Default Target Schema** to `book_exchange`
+6. Click **Start Import**
+
+#### Apply required schema updates
+
+The following columns are required but may be missing from the base schema. Run these SQL statements in MySQL Workbench (or via the PHP scripts below):
+
+```sql
+ALTER TABLE users ADD COLUMN is_suspended TINYINT(1) NOT NULL DEFAULT 0;
+ALTER TABLE users ADD COLUMN suspension_end_date DATE NULL;
+ALTER TABLE users ADD COLUMN suspension_reason TEXT NULL;
+ALTER TABLE notifications ADD COLUMN type VARCHAR(50) NOT NULL DEFAULT 'info';
+```
+
+### 4. Configure environment
+
+Inside the `src/` folder, create a file named `.env`:
+
+```env
+DB_HOST=localhost
+DB_NAME=book_exchange
+DB_USER=root
+DB_PASS=your_mysql_password
+BASE_URL=
+```
+
+Replace `your_mysql_password` with your actual MySQL root password.
+
+### 5. Start the application
+
+Open a terminal in the `src/` directory and run:
+
+```powershell
+php -S localhost:8000
+```
+
+Then open your browser and go to:
+
+```
+http://localhost:8000
+```
+
+---
+
+## Default Test Accounts
+
+After importing `database_sample.sql`, the following accounts are available:
+
+| Role | Email | Password |
+|---|---|---|
+| Admin | user1@univ.edu | 123456 |
+| Student | user2@univ.edu | 123456 |
+
+> To make a user an admin, update their `role` column to `admin` in the `users` table via MySQL Workbench.
+
+---
+
+## Configuration Notes
+
+- **Admin Access** — Register any user and set their `role` to `admin` in the database
+- **Book Images** — Uploaded cover images are stored in `src/uploads/`. Make sure this folder exists and is writable
+- **Email Domain** — To restrict registration to a specific university domain, edit the `is_valid_university_email()` function in `src/auth.php`
+
+---
+
+## Project Structure
+
+```
+book-exchange/
+├── database.sql                    # Database schema (no data)
+├── database_sample.sql             # Schema + sample test data
+├── README.md
+└── src/
+    ├── .env                        # Environment variables (DB credentials)
+    ├── config.php                  # DB connection, loads .env
+    ├── auth.php                    # Authentication helpers
+    ├── header.php                  # Shared navigation header
+    ├── footer.php                  # Shared footer
+    ├── style.css                   # All application styles
+    ├── index.php                   # Book discovery / home page
+    ├── login.php                   # Login page
+    ├── register.php                # Registration page
+    ├── logout.php                  # Session logout
+    ├── add_book.php                # Add new book listing
+    ├── edit_book.php               # Edit existing book
+    ├── delete_book.php             # Delete book listing
+    ├── book_detail.php             # Book detail view
+    ├── my_books.php                # User's own listings + rented books
+    ├── rent_confirm.php            # Rental date selection
+    ├── rental_action.php           # Accept / decline rental
+    ├── swap_request.php            # Initiate a swap
+    ├── swap_action.php             # Accept / decline swap
+    ├── notifications.php           # Notifications & pending requests
+    ├── profile.php                 # Profile settings
+    ├── admin_dashboard.php         # Admin overview
+    ├── admin_books.php             # Admin book management
+    ├── admin_users.php             # Admin user management
+    ├── admin_actions.php           # Admin action handlers
+    ├── admin_reports.php           # Reported books panel
+    ├── admin_suspend.php           # User suspension panel
+    ├── admin_suspend_history.php   # Suspension history
+    ├── suspension_helpers.php      # Suspension utility functions
+    ├── suspension_notice.php       # Suspension notice page
+    └── uploads/                    # User-uploaded book cover images
+```
+
+---
+
+## License
+
+This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.

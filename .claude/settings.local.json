@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(Set-Content *)",
+      "PowerShell(php --ini)",
+      "PowerShell(& \"C:\\\\Users\\\\arday\\\\AppData\\\\Local\\\\Microsoft\\\\WinGet\\\\Packages\\\\PHP.PHP.8.2_Microsoft.Winget.Source_8wekyb3d8bbwe\\\\php.exe\" --ini)"
+    ]
+  }
+}
