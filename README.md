@@ -477,35 +477,46 @@ Bu proje MIT Lisansı ile lisanslanmıştır — detaylar için [LICENSE](LICENS
 ## Screenshots / Ekran Görüntüleri
 
 ### Login Page / Giriş Sayfası
-![Login](screenshots/Login_Page.png)
+<img width="1917" height="910" alt="Login_Page" src="https://github.com/user-attachments/assets/99621323-f051-4ec3-903f-6a3d4d0bebc6" />
+
 
 ### Main Page / Ana Sayfa
-![Main Page](screenshots/Main_Page.png)
+<img width="1896" height="906" alt="Main_Page" src="https://github.com/user-attachments/assets/5a8f27bf-0ec2-4fc7-b062-31dbccc2999b" />
+
 
 ### Book Detail / Kitap Detayı
-![Book Detail](screenshots/Book_Detail.png)
+<img width="1900" height="906" alt="Book_Detail" src="https://github.com/user-attachments/assets/77e0b6a1-ddca-46ef-8cde-9bfc6f3e4b42" />
+
 
 ### Add Book / Kitap Ekle
-![Add Book](screenshots/Add_Book.png)
+<img width="1900" height="907" alt="Add_Book" src="https://github.com/user-attachments/assets/8747e27f-a24a-4e76-9cfd-2717e5ab0934" />
+
 
 ### My Book Listings / Kitap İlanlarım
-![My Book Listings](screenshots/My_Book_Listing.png)
+<img width="1917" height="906" alt="My_Book_Listing" src="https://github.com/user-attachments/assets/77a41d6f-09a7-43e9-8b18-b65a4f7467c9" />
+
 
 ### Books Rented by Me / Kiraladığım Kitaplar
-![Books Rented by Me](screenshots/Books_Rented_by_Me.png)
+<img width="1917" height="902" alt="Books_Rented_by_Me" src="https://github.com/user-attachments/assets/5d194feb-1c06-499e-82bd-870553a4b929" />
+
 
 ### Notifications / Bildirimler
-![Notifications](screenshots/Notifications.png)
+<img width="1897" height="900" alt="Notifications" src="https://github.com/user-attachments/assets/5fd82b01-e525-4004-bb11-640a5f8f0f4f" />
+
 
 ### Profile Settings / Profil Ayarları
-![Profile 1](screenshots/Profile1.png)
-![Profile 2](screenshots/Profile2.png)
+<img width="1896" height="906" alt="Profile1" src="https://github.com/user-attachments/assets/2ee8ec8e-e681-4fb3-8810-d3e3dc4ce7bb" />
+<img width="1897" height="906" alt="Profile2" src="https://github.com/user-attachments/assets/c9b178d3-9816-4837-987a-cc60a1a0072d" />
+
 
 ### Admin Dashboard / Admin Paneli
-![Admin Dashboard](screenshots/Admin_Dashboard.png)
+<img width="1897" height="906" alt="Admin_Dashboard" src="https://github.com/user-attachments/assets/c1754efc-f85d-4bd1-bcca-1286b8be5354" />
+
 
 ### User Suspension / Kullanıcı Askıya Alma
-![User Suspension](screenshots/User_Suspension.png)
+<img width="1892" height="900" alt="User_Suspension" src="https://github.com/user-attachments/assets/b8cf7912-79bb-4e22-a7d9-76a5968e35c8" />
+
 
 ### Reported Items / Şikayet Edilen Kitaplar
-![Reported Items](screenshots/Reported_Items.png)
+<img width="1895" height="897" alt="Reported_Items" src="https://github.com/user-attachments/assets/f37e14b1-2c59-4387-8815-2e2b600f63ce" />
+
